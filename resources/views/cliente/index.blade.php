@@ -8,7 +8,7 @@
 
     <div class="form-row" >   
         <div class="form-group col-md-4">                    
-	       <a href="{{route('cliente.create')}}" class="btn btn-info glyphicon glyphicon-plus">Registrar</a>
+	       <a href="{{route('cliente.create')}}" class="btn btn-info glyphicon glyphicon-plus">Registrar Cliente</a>
         </div>
         <form action="{{route('cliente.index')}}" method="GET" class="form-group form-center">
 
