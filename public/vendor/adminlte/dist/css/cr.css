@@ -1,0 +1,18 @@
+#registrar{
+ 	float:right;
+}
+
+
+#exTable{
+	align:center;
+	width: 75%;
+	border: 3px solid #000000;
+	-moz-border-radius:7px;
+	-webkit-border-radius: 7px;
+	padding: 10px;
+}
+
+.tableThead{
+    background:#8181F7;
+    text-align: center;
+}
