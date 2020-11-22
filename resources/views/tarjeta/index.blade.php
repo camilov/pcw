@@ -7,7 +7,7 @@
 @section('content')
 
                            
-	<a href="{{route('tarjeta.create',$id)}}" class="btn btn-info glyphicon glyphicon-plus">Registrar</a><hr>
+	<a href="{{route('tarjeta.create',$id)}}" class="btn btn-info glyphicon glyphicon-plus">Nueva Tarjeta</a><hr>
     <br>
 	<table class="table table-sm table-condensed table-striped table-bordered" id="exTable">
         <thead class="tableThead thead-dark ">

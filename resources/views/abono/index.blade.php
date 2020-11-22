@@ -8,7 +8,7 @@
 
     <div class="form-row" >   
         <div class="form-group col-md-4">                   
-	       <a href="{{route('abono.create',$id)}}" class="btn btn-info glyphicon glyphicon-plus">Registrar</a> 
+	       <a href="{{route('abono.create',$id)}}" class="btn btn-info glyphicon glyphicon-plus">Nuevo Abono</a> 
         
            <a href="{{route('tarjeta.index',$idCliente)}}" class="btn btn-info glyphicon glyphicon-plus">Tarjetas</a>
         </div>
