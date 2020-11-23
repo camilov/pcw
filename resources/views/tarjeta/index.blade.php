@@ -29,7 +29,7 @@
                     <td>{{$tarjetas->descripcion}}</td>
                     <td>{{$tarjetas->interes}}</td>
                     <td>
-                    <!--<a href="{{route('tarjeta.edit',[$tarjetas->idTarjeta,$id])}}" class="fa fa-wrench"></a>-->
+                    <a href="{{route('tarjeta.edit',[$tarjetas->idTarjeta,$id])}}" class="fa fa-wrench"></a>
                     <a href="{{route('tarjeta.destroy',[$tarjetas->idTarjeta,$id])}}" onclick="return confirm('¿Seguro que deseas eliminar tarjeta?')" class="fa fa-trash"></a>
                     <a href="{{route('abono.index',$tarjetas->idTarjeta)}}" class="fa fa-plus"></a>
                     </td>

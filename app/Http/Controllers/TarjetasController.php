@@ -73,10 +73,11 @@ class TarjetasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,$idTarjeta)
+    public function edit($id,$idCliente)
     {
         $tarjeta = Tarjeta::findOrFail($id);
-        return view('tarjeta.edit')->with('tarjeta',$tarjeta)->with('idTarjeta',$idTarjeta);
+        $estado = Estado::all();
+        return view('tarjeta.edit')->with('tarjeta',$tarjeta)->with('estado',$estado)->with('idCliente',$idCliente);
     }
 
     /**
@@ -88,10 +89,10 @@ class TarjetasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tarjeta=Cliente::findOrFail($id);
-        $tarjeta->nombre =$request->nombre;
+        $tarjeta=Tarjeta::findOrFail($id);
+        $tarjeta->idEstado =$request->idEstado;
         $tarjeta->save();
-        return redirect()->route('tarjeta.index');
+        return redirect()->route('tarjeta.index',$request->idCliente);
     }
 
     /**

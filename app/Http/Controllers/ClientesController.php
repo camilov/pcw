@@ -20,7 +20,7 @@ class ClientesController extends Controller
     {
         //$cliente = Cliente::orderBy('idCliente','ASC')->paginate(10);
 
-        $cliente = Cliente::search($request->nombre)->orderBy('idCliente','ASC')->paginate(5);
+        $cliente = Cliente::search($request->nombre)->orderBy('nombre','ASC')->paginate(5);
 
         /*$cliente = DB::table('clientes')
                       ->select('idCliente','nombre')

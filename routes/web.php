@@ -33,7 +33,7 @@ Route::get('cliente/{ID}/destroy',[
 	    ]);
 
 /*-----------------------------TARJETAS--------------------------*/
-Route::resource('tarjeta','App\Http\Controllers\TarjetasController');
+//Route::resource('tarjeta','App\Http\Controllers\TarjetasController');
 
 Route::get('tarjeta/{ID}/index',[
 	       'uses' => 'App\Http\Controllers\TarjetasController@index',
@@ -45,13 +45,20 @@ Route::get('tarjeta/{ID}/create',[
 	        'as'  => 'tarjeta.create'
 	    ]);
 
+Route::get('tarjeta/{ID},{idCliente}/edit',[
+	       'uses' => 'App\Http\Controllers\TarjetasController@edit',
+	        'as'  => 'tarjeta.edit'
+	    ]);
+
+
 Route::get('tarjeta/{ID},{idCliente}/destroy',[
 	       'uses' => 'App\Http\Controllers\TarjetasController@destroy',
 	        'as'  => 'tarjeta.destroy'
 	    ]);
-Route::get('tarjeta/{ID},{idCliente}/edit',[
-	       'uses' => 'App\Http\Controllers\TarjetasController@edit',
-	        'as'  => 'tarjeta.edit'
+
+Route::put('tarjeta/{ID}',[
+	       'uses' => 'App\Http\Controllers\TarjetasController@update',
+	        'as'  => 'tarjeta.update'
 	    ]);
 
 /*-----------------------------ABONO--------------------------*/
