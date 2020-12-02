@@ -24,7 +24,7 @@
               <div class="form-row" >
                 <div class="form-group col-md-4">
                   <label for="fechaPrestamo">Fecha prestamo</label>
-                  <input type="date" id="fechaPrestamo" name="fechaPrestamo" 
+                  <input type="date" id="fechaPrestamo" name="fechaPrestamo" value="<?php echo date('Y-m-d'); ?>"
                   class="form-control"/>
                 </div>
                 <div class="form-group col-md-4">

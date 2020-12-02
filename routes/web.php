@@ -61,6 +61,8 @@ Route::put('tarjeta/{ID}',[
 	        'as'  => 'tarjeta.update'
 	    ]);
 
+Route::post('store', 'TarjetasController@store')->name("tarjeta.store");
+
 /*-----------------------------ABONO--------------------------*/
 Route::resource('abono','App\Http\Controllers\AbonosController');
 

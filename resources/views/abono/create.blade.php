@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group col-md-4">
                   <label for="fechaAbono">Fecha Abono</label>
-                  <input type="date" id="fechaAbono" name="fechaAbono" 
+                  <input type="date" id="fechaAbono" name="fechaAbono" value="<?php echo date('Y-m-d'); ?>" 
                   class="form-control" class="form-control" />
                 </div>
               </div>
