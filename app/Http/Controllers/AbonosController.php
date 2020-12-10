@@ -45,7 +45,12 @@ class AbonosController extends Controller
      */
     public function create($id)
     {
-        return view('abono.create')->with('id',$id);
+        
+        $valorDefecto = DB::table('tarjetas')
+                           ->select('valorDefecto')
+                           ->where('tarjetas.idTarjeta','=',$id)
+                           ->get();
+        return view('abono.create')->with('id',$id)->with('valorDefecto',$valorDefecto);
     }
 
     /**

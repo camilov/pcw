@@ -29,7 +29,13 @@ class TarjetasController extends Controller
                       ->orderBy('idTarjeta','desc')
                       ->get();
 
-        return view('tarjeta.index')->with('tarjeta',$tarjeta)->with('id',$id);
+        $cliente = DB::table('clientes')
+                      ->select('nombre')
+                      ->where('clientes.idCliente','=',$id)
+                      ->get();
+        
+
+        return view('tarjeta.index')->with('tarjeta',$tarjeta)->with('id',$id)->with('cliente',$cliente);
     }
 
     /**
@@ -91,6 +97,7 @@ class TarjetasController extends Controller
     {
         $tarjeta=Tarjeta::findOrFail($id);
         $tarjeta->idEstado =$request->idEstado;
+        $tarjeta->valorDefecto =$request->valorDefecto;
         $tarjeta->save();
         return redirect()->route('tarjeta.index',$request->idCliente);
     }

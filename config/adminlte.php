@@ -240,12 +240,12 @@ return [
             'route'       => 'cliente.index',
             'icon'        => 'far fa-address-book',
         ],
-        /*[
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
         [
+            'text'  => 'Cuentas',
+            'route' => 'cuentas.index',
+            'icon'  => 'fas fa-calculator',
+        ],
+        /*[
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',

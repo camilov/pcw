@@ -20,6 +20,13 @@
               </select>
           </div>
         </div>
+        <div class="form-row" >
+          <div class="form-group col-md-4">
+            <label for="valorDefecto">Valor defecto</label>
+            <input type="number" id="valorDefecto" name="valorDefecto" 
+            class="form-control" placeholder="Escribe valor por defecto" value="{{$tarjeta->valorDefecto}}"/>
+          </div>
+        </div>
         <br>
         <button type="submit" class="btn btn-primary">Editar</button>
 

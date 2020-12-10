@@ -13,7 +13,7 @@ class Tarjeta extends Model
 
     protected $fillable = [
         'idCliente','valorPrestado','valorTotal','fechaPrestamo',
-        'numCuotas','idEstado','interes'
+        'numCuotas','idEstado','interes','valorDefecto'
     ];
 
 }

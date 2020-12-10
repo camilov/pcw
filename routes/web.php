@@ -61,7 +61,7 @@ Route::put('tarjeta/{ID}',[
 	        'as'  => 'tarjeta.update'
 	    ]);
 
-Route::post('store', 'TarjetasController@store')->name("tarjeta.store");
+Route::post('store', 'App\Http\Controllers\TarjetasController@store')->name("tarjeta.store");
 
 /*-----------------------------ABONO--------------------------*/
 Route::resource('abono','App\Http\Controllers\AbonosController');
@@ -80,3 +80,5 @@ Route::get('abono/{ID},{idTarjeta}/destroy',[
 	       'uses' => 'App\Http\Controllers\AbonosController@destroy',
 	        'as'  => 'abono.destroy'
 	    ]);
+/*-----------------------------CUENTAS--------------------------*/
+Route::resource('cuentas','App\Http\Controllers\CuentasController');

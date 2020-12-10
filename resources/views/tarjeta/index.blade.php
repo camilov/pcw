@@ -6,9 +6,21 @@
 
 @section('content')
 
-                           
-	<a href="{{route('tarjeta.create',$id)}}" class="btn btn-info glyphicon glyphicon-plus">Nueva Tarjeta</a><hr>
-    <br>
+    <div class="form-row" >
+        <div class="form-group col-md-2">
+            <div class="let">
+                <h3> 
+                    @foreach($cliente as $clientes)
+                        {{$clientes->nombre}}
+                    @endforeach
+                </h3>
+            </div>
+        </div>
+        <div class="form-group col-md-2">       
+	       <a href="{{route('tarjeta.create',$id)}}" class="btn btn-info glyphicon glyphicon-plus">Nueva Tarjeta</a>
+        </div>
+    </div>
+    <hr>
 	<table class="table table-sm table-condensed table-striped table-bordered" id="exTable">
         <thead class="tableThead thead-dark ">
             <th scope="col">Valor Prestado</th>
@@ -37,5 +49,26 @@
             @endforeach
         </tbody>
     </table>
+
+    <style>
+        .let {
+            background-color:White;
+            width:150px;  overflow:auto;
+            text-align: center;
+            border:2px solid Black;
+            border-style: outset;
+            border-radius: 5px;
+        }
+        .let h3{
+            text-transform: lowercase;
+            color:Black;
+
+        }
+
+        .let h3:first-letter {
+            text-transform: uppercase;
+        }
+       
+    </style>
 
 @endsection

@@ -47,7 +47,15 @@
                   <input type="number" id="interes" name="interes" 
                   class="form-control" placeholder="Escribe interes" value="0"/>
                 </div>
+                
               </div>
+              <div class="form-row" >
+                <div class="form-group col-md-4">
+                  <label for="valorDefecto">Valor defecto</label>
+                  <input type="number" id="valorDefecto" name="valorDefecto" 
+                  class="form-control" placeholder="Escribe valor por defecto" value="0"/>
+                </div>
+              </div>  
               <br>
               <button type="submit" class="btn btn-primary">Registrar</button>
           </form>
