@@ -38,7 +38,7 @@
                     <td>{{$tarjetas->valorTotal}}</td>
                     <td>{{$tarjetas->fechaPrestamo}}</td>
                     <td>{{$tarjetas->numCuotas}}</td>
-                    <td>{{$tarjetas->descripcion}}</td>
+                    <td id ="estado" onchange="cambiarColor()">{{$tarjetas->descripcion}}</td>
                     <td>{{$tarjetas->interes}}</td>
                     <td>
                     <a href="{{route('tarjeta.edit',[$tarjetas->idTarjeta,$id])}}" class="fa fa-wrench"></a>
@@ -70,5 +70,13 @@
         }
        
     </style>
+
+    <script type="text/javascript">
+        
+        function cambiarColor()
+        {
+            document.getElementById('estado').style.backgroundColor = "yellow";
+        }
+    </script>
 
 @endsection

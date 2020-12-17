@@ -33,7 +33,7 @@
                     <td>{{$clientes->nombre}}</td>
                     <td>
                     <a href="{{route('cliente.edit',$clientes->idCliente)}}" class="fa fa-wrench"></a>
-                    <a href="{{route('cliente.destroy',$clientes->idCliente)}}" onclick="return confirm('¿Seguro que deseas eliminar el cliente?')" class="fa fa-trash"></a>
+                    <!--<a href="{{route('cliente.destroy',$clientes->idCliente)}}" onclick="return confirm('¿Seguro que deseas eliminar el cliente?')" class="fa fa-trash"></a>-->
                     <a href="{{route('tarjeta.index',$clientes->idCliente)}}" class="fa fa-id-card"></a>
                     </td>
                 </tr>

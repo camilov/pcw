@@ -27,9 +27,71 @@
             class="form-control" placeholder="Escribe valor por defecto" value="{{$tarjeta->valorDefecto}}"/>
           </div>
         </div>
+        <label for="valorDefecto">¿Voltear tarjeta?</label>
+        <hr>
+        <div class="form-row" >
+          <div class="form-group col-md-4">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voltear"  value="s" checked
+               id="vols">
+              <label class="form-check-label" for="voltear">
+                Si
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voltear" value="n" checked
+               id="voln">
+              <label class="form-check-label" for="voltear">
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+        <label for="valorDefecto">¿valor especial?</label>
+        <hr>
+        <div class="form-row" >
+          <div class="form-group col-md-4">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="especial" value="s" checked>
+              <label class="form-check-label" for="especial">
+                Si
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="especial" value="n" checked>
+              <label class="form-check-label" for="especial">
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="form-row" >
+          <div class="form-group col-md-4">
+            <input type="number" id="nuevoValor" name="nuevoValor" 
+            class="form-control" placeholder="Escribe nuevo valor de tarjeta" />
+          </div>
+        </div>
         <br>
         <button type="submit" class="btn btn-primary">Editar</button>
 
     </form>
+
+    <style type="text/css">
+
+
+    </style>
+
+    <script type="text/javascript">
+      
+      function handleClick(){
+
+        if (document.getElementById('vols').checked)
+    {
+      alert('no tienes estudios');
+    }else
+      }
+
+    </script>
 
 @endsection

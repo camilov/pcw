@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Tarjeta;
 use App\Models\Estado;
+use App\Models\Cuentas;
 
 
 
@@ -58,6 +59,23 @@ class TarjetasController extends Controller
     public function store(Request $request)
     {
         $tarjeta = new Tarjeta($request->all());
+        $valorPrestado = $request->input('valorPrestado');
+        /*$valores = DB::table('totales')
+                      ->select('totalCapital','totalPrestado')
+                      ->where('totales.idTotal','=',1)
+                      ->get();
+        
+        foreach($valores as $valor)
+        {
+           $capital       = $valor->totalCapital - $valorPrestado;
+           $totalPrestado = $valor->totalPrestado + $valorPrestado;
+        }
+
+        $total=Cuentas::findOrFail(1);
+        $total->totalCapital =$capital;
+        $total->totalPrestado =$totalPrestado;
+        $total->save();*/
+
         $tarjeta->save();
         return redirect()->route('tarjeta.index',$request->idCliente);
     }
@@ -98,6 +116,31 @@ class TarjetasController extends Controller
         $tarjeta=Tarjeta::findOrFail($id);
         $tarjeta->idEstado =$request->idEstado;
         $tarjeta->valorDefecto =$request->valorDefecto;
+
+       // dd($request->voltear);
+
+        /*$estado = $request->valorDefecto;
+
+        $tarjetas = DB::table('tarjetas')
+                      ->select('valorPrestado','valorTotal')
+                      ->where('tarjetas.idTarjeta','=',$id)
+                      ->get();
+
+        foreach($tarjetas as $tarjeta)
+        {
+           $valorPrestado = $valor->valorPrestado;
+           $valorTotal    = $valor->valorTotal;
+        }
+
+
+        if($estado == 2){
+
+            if($valorTotal > $valorPrestado){
+                    
+            }
+
+        }*/
+
         $tarjeta->save();
         return redirect()->route('tarjeta.index',$request->idCliente);
     }

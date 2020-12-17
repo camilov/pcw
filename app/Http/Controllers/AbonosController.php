@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Abono;
 use App\Models\Tarjeta;
+use App\Models\Cuentas;
 
 
 class AbonosController extends Controller
@@ -66,6 +67,7 @@ class AbonosController extends Controller
         $idTarjeta = $request->input('idTarjeta');
         $numCuota = $request->input('numCuota');
         $valorAbono = $request->input('valorAbono');
+        $valorAbono2 = $request->input('valorAbono');
         $valores = DB::table('tarjetas')
                       ->select('numCuotas','valorTotal')
                       ->where('tarjetas.idTarjeta','=',$idTarjeta)
@@ -80,8 +82,27 @@ class AbonosController extends Controller
         $tarjeta=Tarjeta::findOrFail($idTarjeta);
         $tarjeta->numCuotas =$numCuota;
         $tarjeta->valorTotal =$valorAbono;
+
+        /*$valores2 = DB::table('totales')
+                      ->select('totalCapital','totalPagado')
+                      ->where('totales.idTotal','=',1)
+                      ->get();
+        
+        foreach($valores2 as $valor2)
+        {
+           $capital     = $valor2->totalCapital + $valorAbono2;
+           $totalPagado = $valor2->totalPagado  + $valorAbono2;
+        }
+
+        $total=Cuentas::findOrFail(1);
+        $total->totalCapital = $capital;
+        $total->totalPagado  = $totalPagado;*/
+
+
         $tarjeta->save();
         $abono->save();
+       // $total->save();
+
         return redirect()->route('abono.index',$request->idTarjeta);
     }
 
