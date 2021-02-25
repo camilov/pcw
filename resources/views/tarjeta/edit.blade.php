@@ -72,6 +72,12 @@
             class="form-control" placeholder="Escribe nuevo valor de tarjeta" />
           </div>
         </div>
+        <div class="form-row" >
+          <div class="form-group col-md-4">
+            <input type="number" id="nuevoValorDefecto" name="nuevoValorDefecto" 
+            class="form-control" placeholder="Escribe nuevo valor de defecto" />
+          </div>
+        </div>
         <br>
         <button type="submit" class="btn btn-primary">Editar</button>
 

@@ -101,7 +101,7 @@ class AbonosController extends Controller
 
         $tarjeta->save();
         $abono->save();
-       // $total->save();
+        //$total->save();
 
         return redirect()->route('abono.index',$request->idTarjeta);
     }
@@ -148,8 +148,15 @@ class AbonosController extends Controller
      */
     public function destroy($id,$idTarjeta)
     {
+
         $abono = Abono::findOrFail($id);
+       
+        $tarjeta=Tarjeta::findOrFail($idTarjeta);
+        $tarjeta->numCuotas = $tarjeta->numCuotas-1;
+        $tarjeta->valorTotal = $tarjeta->valorTotal - $abono->valorAbono;
+        $tarjeta->save();
         $abono->delete();
+
         return redirect()->route('abono.index',$idTarjeta);
     }
 }

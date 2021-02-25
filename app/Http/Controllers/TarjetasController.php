@@ -117,29 +117,61 @@ class TarjetasController extends Controller
         $tarjeta->idEstado =$request->idEstado;
         $tarjeta->valorDefecto =$request->valorDefecto;
 
-       // dd($request->voltear);
 
-        /*$estado = $request->valorDefecto;
+        $especial = $request->especial;
+        $voltear = $request->voltear;
+        $estado = $request->idEstado;
+        $nuevoValor = $request->nuevoValor;
+        $nuevoValorDefecto = $request->nuevoValorDefecto;
 
+        
         $tarjetas = DB::table('tarjetas')
                       ->select('valorPrestado','valorTotal')
                       ->where('tarjetas.idTarjeta','=',$id)
                       ->get();
 
-        foreach($tarjetas as $tarjeta)
+
+
+        foreach($tarjetas as $tarjeta3)
         {
-           $valorPrestado = $valor->valorPrestado;
-           $valorTotal    = $valor->valorTotal;
+           $valorPrestado = $tarjeta3->valorPrestado;
+           $valorTotal    = $tarjeta3->valorTotal;
+          // dd($valorPrestado);
         }
 
+        
 
         if($estado == 2){
-
-            if($valorTotal > $valorPrestado){
-                    
+            
+            if($voltear ="s"){
+                if($especial ="s"){
+                    $tarjeta1 = new Tarjeta();
+                    $tarjeta1->idCliente     = $request->idCliente;
+                    $tarjeta1->valorPrestado = $valorPrestado;  
+                    $tarjeta1->valorTotal    = 0;
+                    $tarjeta1->fechaPrestamo = now();
+                    $tarjeta1->numCuotas     = 0;
+                    $tarjeta1->idEstado      = 1;
+                    $tarjeta1->interes       = 0;
+                    $tarjeta1->valorDefecto  = $request->valorDefecto;
+                    $tarjeta1->save();
+                }else
+                {
+                   // dd($valorPrestado);
+                    $tarjeta2 = new Tarjeta();
+                    $tarjeta2->idCliente     = $request->idCliente;
+                    $tarjeta2->valorPrestado = $nuevoValor;  
+                    $tarjeta2->valorTotal    = 0;
+                    $tarjeta2->fechaPrestamo = now();
+                    $tarjeta2->numCuotas     = 0;
+                    $tarjeta2->idEstado      = 1;
+                    $tarjeta2->interes       = 0;
+                    $tarjeta2->valorDefecto  = $nuevoValorDefecto;
+                    $tarjeta2->save();
+                }
             }
 
-        }*/
+        }
 
         $tarjeta->save();
         return redirect()->route('tarjeta.index',$request->idCliente);
