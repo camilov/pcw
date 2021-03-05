@@ -27,6 +27,26 @@
             class="form-control" placeholder="Escribe valor por defecto" value="{{$tarjeta->valorDefecto}}"/>
           </div>
         </div>
+        <label for="valorDefecto">¿Renovar tarjeta?</label>
+        <hr>
+        <div class="form-row" >
+          <div class="form-group col-md-4">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="renovar"  value="s" checked
+               id="rens">
+              <label class="form-check-label" for="renovar">
+                Si
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="renovar" value="n" checked
+               id="renn">
+              <label class="form-check-label" for="renovar">
+                No
+              </label>
+            </div>
+          </div>
+        </div>
         <label for="valorDefecto">¿Voltear tarjeta?</label>
         <hr>
         <div class="form-row" >
