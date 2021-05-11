@@ -43,9 +43,12 @@
                   </select>
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="interes">Interes</label>
-                  <input type="number" id="interes" name="interes" 
-                  class="form-control" placeholder="Escribe interes" value="0"/>
+                  <label for="idInteres">Interes</label>
+                  <select  name="idInteres" id="idInteres" class="form-control">
+                    @foreach($porcentaje as $porcentajes)
+                      <option value="{{$porcentajes->idPorcentaje}}">{{$porcentajes->porcentaje}}</option>
+                    @endforeach
+                  </select>
                 </div>
                 
               </div>

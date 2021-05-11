@@ -9,6 +9,7 @@ use App\Models\Tarjeta;
 use App\Models\Estado;
 use App\Models\Cuentas;
 use App\Models\Movimiento;
+use App\Models\Porcentaje;
 
 
 
@@ -48,7 +49,8 @@ class TarjetasController extends Controller
     public function create($id)
     {
         $estado = Estado::all();
-        return view('tarjeta.create')->with('id',$id)->with('estado',$estado);
+        $porcentaje = Porcentaje::all();
+        return view('tarjeta.create')->with('id',$id)->with('estado',$estado)->with('porcentaje',$porcentaje);
     }
 
     /**
@@ -61,6 +63,8 @@ class TarjetasController extends Controller
     {
         $tarjeta = new Tarjeta($request->all());
         $valorPrestado = $request->input('valorPrestado');
+        $interes =$request->input('idInteres') ;
+        //dd(0.1);
         $valores = DB::table('totales')
                       ->select('totalCapital','totalPrestado')
                       ->where('totales.idTotal','=',3)
@@ -83,10 +87,6 @@ class TarjetasController extends Controller
                       ->where('tarjetas.idCliente','=',$request->idCliente)
                       ->max('idTarjeta');
                       
-
-
-
-
         $movimiento = new Movimiento();
         $movimiento->entrada   = 0;
         $movimiento->salida    = $valorPrestado;   
@@ -243,6 +243,50 @@ class TarjetasController extends Controller
     public function destroy($id,$idCliente)
     {
         $tarjeta = Tarjeta::findOrFail($id);
+
+        $valores2 = DB::table('totales')
+                      ->select('totalCapital','totalPagado','totalPrestado')
+                      ->where('totales.idTotal','=',3)
+                      ->get();
+        
+        foreach($valores2 as $valor2)
+        {
+           $capital       = $valor2->totalCapital ;
+           $totalPagado   = $valor2->totalPagado  ;
+           $totalPrestado = $valor2->totalPrestado;
+
+        }
+
+
+        $tarjetas = DB::table('tarjetas')
+                      ->select('valorPrestado','valorTotal')
+                      ->where('tarjetas.idTarjeta','=',$id)
+                      ->get();
+
+
+
+        foreach($tarjetas as $tarjeta3)
+        {
+           $valorPrestado = $tarjeta3->valorPrestado;
+           $valorTotal    = $tarjeta3->valorTotal;
+        }
+
+        $nuevoValorCapital = $capital - ($valorPrestado - $valorTotal);
+
+
+        $total=Cuentas::findOrFail(3);
+        $total->totalCapital = $nuevoValorCapital;
+        $total->save();
+
+        $movimiento = new Movimiento();
+        $movimiento->entrada   = 0;  
+        $movimiento->salida    = $valorPrestado - $valorTotal; 
+        $movimiento->tipMvto   = 'BT';
+        $movimiento->idTarjeta = $id;
+        $movimiento->idCliente = $idCliente;
+        $movimiento->fecMvto   = now();
+        $movimiento->save();
+
         $tarjeta->delete();
         return redirect()->route('tarjeta.index',$idCliente);
     }

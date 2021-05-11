@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Movimiento;
+use Illuminate\Support\Facades\DB;
+
 
 class MovimientosController extends Controller
 {
@@ -13,7 +16,14 @@ class MovimientosController extends Controller
      */
     public function index()
     {
-        //
+        //$movimiento = Movimiento::search($request->nombre)->orderBy('nombre','ASC')->paginate(5);
+
+        $movimiento = DB::table('movimientos')
+                      ->select('entrada','salida','tipMvto','idTarjeta','idCliente','fecMvto')
+                      ->orderBy('idMovimiento','desc')
+                      ->get();
+
+        return view('movimiento.index')->with('movimiento',$movimiento); 
     }
 
     /**

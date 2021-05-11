@@ -82,3 +82,4 @@ Route::get('abono/{ID},{idTarjeta}/destroy',[
 	    ]);
 /*-----------------------------CUENTAS--------------------------*/
 Route::resource('cuentas','App\Http\Controllers\CuentasController');
+Route::resource('movimientos','App\Http\Controllers\MovimientosController');

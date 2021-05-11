@@ -245,6 +245,11 @@ return [
             'route' => 'cuentas.index',
             'icon'  => 'fas fa-calculator',
         ],
+         [
+            'text'  => 'Movimientos',
+            'route' => 'movimientos.index',
+            'icon'  => 'fas fa-calculator',
+        ],
         /*[
             'text'        => 'pages',
             'url'         => 'admin/pages',
