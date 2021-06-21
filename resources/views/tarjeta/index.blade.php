@@ -70,13 +70,12 @@
         }
        
     </style>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
     <script type="text/javascript">
         
-        function cambiarColor()
-        {
-            document.getElementById('estado').style.backgroundColor = "yellow";
-        }
+        $(document).ready(function(){
+             
+      });
     </script>
 
 @endsection
