@@ -331,7 +331,7 @@ class TarjetasController extends Controller
         if($voltea =="s"){
             $nuevoTotalPrestado = $totalPrestado + $valorPrestado;
             $nuevoTotalCapital  = $capital - ($valorPrestado + ($valorPrestado*0.3)-$valorTotal-(($valorPrestado*0.3)/2));  
-            $movimiento->salida = $valorPrestado + ($valorPrestado*0.3)-$valorTotal;
+            $movimiento->salida = $valorPrestado + ($valorPrestado*0.3)-$valorTotal-$valorPrestado;
             $movimiento2->salida = ($valorPrestado*0.3)/2;
         }else{
             if($renueva =="s"){

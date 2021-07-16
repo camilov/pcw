@@ -6,6 +6,20 @@
 
 @section('content')
 
+    <div class="form-row" >   
+        <form action="{{route('movimientos.index')}}" method="GET" class="form-group form-center">
+
+              @csrf
+              <div class="form-group col-md-12">
+                
+                <label for="fecha">Buscar</label>
+                <input type="date" id="fecha" name="fecha" class="form-control"
+                placeholder="AAAA-MM-DD"/>
+                <span class="input-group-btn"><button type="submit" class="btn btn-primary">Buscar</button></span>
+              </div>
+        </form>
+    </div>
+    <br>
 	<table class="table table-sm table-condensed table-striped table-bordered" id="exTable">
         <thead class="tableThead thead-dark ">
             <th scope="col">Entrada</th>
@@ -20,9 +34,9 @@
                 <tr>
                     <td>{{$movimientos->entrada}}</td>
                     <td>{{$movimientos->salida}}</td>
-                    <td>{{$movimientos->tipMvto}}</td>
+                    <td>{{$movimientos->nomMvto}}</td>
                     <td>{{$movimientos->idTarjeta}}</td>
-                    <td>{{$movimientos->idCliente}}</td>
+                    <td>{{$movimientos->nombre}}</td>
                     <td>{{$movimientos->fecMvto}}</td>
                 </tr>
             @endforeach

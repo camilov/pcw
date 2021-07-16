@@ -14,14 +14,17 @@ class MovimientosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //$movimiento = Movimiento::search($request->nombre)->orderBy('nombre','ASC')->paginate(5);
-
+    public function index(Request $request)
+    {   
+        //dd($request->fecha);
         $movimiento = DB::table('movimientos')
-                      ->select('entrada','salida','tipMvto','idTarjeta','idCliente','fecMvto')
-                      ->orderBy('idMovimiento','desc')
-                      ->get();
+                      ->join('tipomovimiento','tipomovimiento.tipMvto', '=','movimientos.tipMvto')
+                      ->join('clientes','clientes.idCliente', '=','movimientos.idCliente')
+                      ->select('entrada','salida','tipomovimiento.nomMvto as nomMvto','idTarjeta','clientes.nombre as nombre','fecMvto')
+                      ->where('movimientos.fecMvto',$request->fecha)
+                      ->orWhere('movimientos.fecMvto','is not null')
+                      ->orderBy('fecMvto','desc')
+                      ->paginate(10);
 
         return view('movimiento.index')->with('movimiento',$movimiento); 
     }
