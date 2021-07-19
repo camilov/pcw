@@ -22,11 +22,33 @@ class MovimientosController extends Controller
                       ->join('clientes','clientes.idCliente', '=','movimientos.idCliente')
                       ->select('entrada','salida','tipomovimiento.nomMvto as nomMvto','idTarjeta','clientes.nombre as nombre','fecMvto')
                       ->where('movimientos.fecMvto',$request->fecha)
-                      ->orWhere('movimientos.fecMvto','is not null')
+                     // ->orWhere('movimientos.fecMvto','is not null')
                       ->orderBy('fecMvto','desc')
                       ->paginate(10);
 
-        return view('movimiento.index')->with('movimiento',$movimiento); 
+        $interes = DB::table('movimientos')
+                   ->where('movimientos.tipMvto','=','PI')
+                   ->where('movimientos.fecMvto',$request->fecha)
+                   ->sum('movimientos.salida');
+        //dd($interes);
+        $entrada = DB::table('movimientos')
+                   ->where('movimientos.tipMvto','=','A')
+                   ->where('movimientos.fecMvto',$request->fecha)
+                   ->sum('movimientos.entrada');
+
+        $positivo = DB::table('movimientos')
+                  ->where('movimientos.fecMvto',$request->fecha)
+                  ->where('movimientos.salida','>','0')
+                  ->sum('movimientos.salida');
+        
+        $negativo = DB::table('movimientos')
+                  ->where('movimientos.fecMvto',$request->fecha)
+                  ->where('movimientos.salida','<','0')
+                  ->sum('movimientos.salida');
+
+        $salida = abs($negativo) + $positivo;
+
+        return view('movimiento.index')->with('movimiento',$movimiento)->with('interes',$interes)->with('entrada',$entrada)->with('salida',$salida); 
     }
 
     /**

@@ -6,18 +6,38 @@
 
 @section('content')
 
-    <div class="form-row" >   
-        <form action="{{route('movimientos.index')}}" method="GET" class="form-group form-center">
-
-              @csrf
-              <div class="form-group col-md-12">
-                
-                <label for="fecha">Buscar</label>
+     
+    <form action="{{route('movimientos.index')}}" method="GET" class="form-group form-center">
+        @csrf
+        <div class="form-row" >  
+            <div class="form-group col-md-0"> 
+                <label for="fecha">Fecha</label>
+            </div>
+            <div class="form-group col-md-4">    
                 <input type="date" id="fecha" name="fecha" class="form-control"
                 placeholder="AAAA-MM-DD"/>
-                <span class="input-group-btn"><button type="submit" class="btn btn-primary">Buscar</button></span>
-              </div>
-        </form>
+            </div>
+            <div class="form-group col-md-4">
+              <span class="input-group-btn"><button type="submit" class="btn btn-primary">Buscar</button></span>
+            </div>
+        </div>
+    </form>
+    <div class="form-row" >  
+        <div class="form-group col-md-2">    
+            <label for="interes">Interes</label>
+            <input type="number" id="interes" name="interes" class="form-control" placeholder="Valor a pagar"
+            disabled ="true" value ="{{$interes}}"/> 
+        </div>
+        <div class="form-group col-md-2">    
+            <label for="salida">Salida</label>
+            <input type="number" id="salida" name="salida" class="form-control" placeholder="Total salida"
+            disabled ="true" value ="{{$salida}}"/> 
+        </div>
+        <div class="form-group col-md-2">    
+            <label for="entrada">Entrada</label>
+            <input type="number" id="entrada" name="entrada" class="form-control" placeholder="Total Entrada"
+            disabled ="true" value ="{{$entrada}}"/> 
+        </div>
     </div>
     <br>
 	<table class="table table-sm table-condensed table-striped table-bordered" id="exTable">
@@ -42,5 +62,12 @@
             @endforeach
         </tbody>
     </table>
+
+
+    
+
+    <script>
+    
+    </script>
 
 @endsection
