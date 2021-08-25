@@ -13,7 +13,7 @@
             <div class="form-group col-md-0"> 
                 <label for="fecha">Fecha</label>
             </div>
-            <div class="form-group col-md-4">    
+            <div class="form-group col-md-2">    
                 <input type="date" id="fecha" name="fecha" class="form-control"
                 placeholder="AAAA-MM-DD"/>
             </div>

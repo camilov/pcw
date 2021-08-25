@@ -48,6 +48,8 @@ class MovimientosController extends Controller
 
         $salida = abs($negativo) + $positivo;
 
+        $entrada = $entrada - $salida;
+
         return view('movimiento.index')->with('movimiento',$movimiento)->with('interes',$interes)->with('entrada',$entrada)->with('salida',$salida); 
     }
 
