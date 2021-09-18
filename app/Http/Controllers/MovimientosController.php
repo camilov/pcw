@@ -24,7 +24,7 @@ class MovimientosController extends Controller
                       ->where('movimientos.fecMvto',$request->fecha)
                      // ->orWhere('movimientos.fecMvto','is not null')
                       ->orderBy('fecMvto','desc')
-                      ->paginate(10);
+                      ->paginate(100);
 
         $interes = DB::table('movimientos')
                    ->where('movimientos.tipMvto','=','PI')
@@ -35,7 +35,7 @@ class MovimientosController extends Controller
                    ->where('movimientos.tipMvto','=','A')
                    ->where('movimientos.fecMvto',$request->fecha)
                    ->sum('movimientos.entrada');
-
+                  // dd($entrada);
         $positivo = DB::table('movimientos')
                   ->where('movimientos.fecMvto',$request->fecha)
                   ->where('movimientos.salida','>','0')
