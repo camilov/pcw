@@ -266,9 +266,8 @@ class TarjetasController extends Controller
         $movimientos = DB::table('movimientos')
                       ->select('idMovimiento')
                       ->where('movimientos.idTarjeta','=',$id)
-                      ->where('movimientos.fecMvto',now())
                       ->get();
-
+        //dd($movimientos);
         foreach($tarjetas as $tarjeta3)
         {
            $valorPrestado = $tarjeta3->valorPrestado;
@@ -282,14 +281,14 @@ class TarjetasController extends Controller
         $total->totalCapital = $nuevoValorCapital;
         $total->save();
 
-        $movimiento = new Movimiento();
+        /*$movimiento = new Movimiento();
         $movimiento->entrada   = $valorPrestado;  
         $movimiento->salida    = 0; 
         $movimiento->tipMvto   = 'BT';
         $movimiento->idTarjeta = $id;
         $movimiento->idCliente = $idCliente;
         $movimiento->fecMvto   = now();
-        $movimiento->save();
+        $movimiento->save();*/
 
         $tarjeta->delete();
         return redirect()->route('tarjeta.index',$idCliente);
