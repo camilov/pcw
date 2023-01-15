@@ -13,7 +13,7 @@ class Movimiento extends Model
 
     protected $fillable = [
         'entrada','salida','tipMvto','idTarjeta',
-        'idCliente','fecMvto'
+        'idCliente','fecMvto','mcaAjuste'
     ];
    //use HasFactory;
 }

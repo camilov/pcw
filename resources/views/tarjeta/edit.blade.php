@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        <label for="valorDefecto">¿Voltear tarjeta?</label>
+        <!--<label for="valorDefecto">¿Voltear tarjeta?</label>
         <hr>
         <div class="form-row" >
           <div class="form-group col-md-4">
@@ -66,8 +66,8 @@
               </label>
             </div>
           </div>
-        </div>
-        <label for="valorDefecto">¿valor especial?</label>
+        </div>-->
+        <!--<label for="valorDefecto">¿valor especial?</label>
         <hr>
         <div class="form-row" >
           <div class="form-group col-md-4">
@@ -84,20 +84,23 @@
               </label>
             </div>
           </div>
-        </div>
+          </div>
+        -->  
+        
         <hr>
+        <label for="valorDefecto">Nuevo valor de tarjeta</label>
         <div class="form-row" >
           <div class="form-group col-md-4">
             <input type="number" id="nuevoValor" name="nuevoValor" 
-            class="form-control" placeholder="Escribe nuevo valor de tarjeta" />
+            class="form-control" placeholder="Escribe nuevo valor de tarjeta" value="0"  />
           </div>
         </div>
-        <div class="form-row" >
+        <!--<div class="form-row" >
           <div class="form-group col-md-4">
             <input type="number" id="nuevoValorDefecto" name="nuevoValorDefecto" 
             class="form-control" placeholder="Escribe nuevo valor de defecto" />
           </div>
-        </div>
+        </div>-->
         <br>
         <button type="submit" class="btn btn-primary">Editar</button>
 

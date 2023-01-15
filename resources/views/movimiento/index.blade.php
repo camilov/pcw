@@ -38,6 +38,16 @@
             <input type="number" id="entrada" name="entrada" class="form-control" placeholder="Total Entrada"
             disabled ="true" value ="{{$entrada}}"/> 
         </div>
+        <div class="form-group col-md-2">    
+            <label for="total">Total</label>
+            <input type="number" id="total" name="total" class="form-control" placeholder="Total"
+            disabled ="true" value ="{{$total}}"/> 
+        </div>
+        <div class="form-group col-md-2">    
+            <label for="prestamos">Prestamos</label>
+            <input type="number" id="prestamos" name="prestamos" class="form-control" placeholder="prestamos"
+            disabled ="true" value ="{{$pr}}"/> 
+        </div>
     </div>
     <br>
 	<table class="table table-sm table-condensed table-striped table-bordered" id="exTable">
@@ -67,7 +77,18 @@
     
 
     <script>
-    
+    window.onload = function(){
+        var fecha = new Date(); //Fecha actual
+        var mes = fecha.getMonth()+1; //obteniendo mes
+        var dia = fecha.getDate(); //obteniendo dia
+        var ano = fecha.getFullYear(); //obteniendo año
+  
+        if(dia<10)
+            dia='0'+dia; //agrega cero si el menor de 10
+        if(mes<10)
+            mes='0'+mes //agrega cero si el menor de 10
+        document.getElementById('fecha').value=ano+"-"+mes+"-"+dia;
+    }
     </script>
 
 @endsection

@@ -16,18 +16,26 @@
                   class="form-control" placeholder="Escribe valor prestado"/>
                 </div>
                 <div class="form-group col-md-4">
+                  <label for="idInteres">Interes</label>
+                  <select  name="idInteres" id="idInteres" class="form-control">
+                    @foreach($porcentaje as $porcentajes)
+                      <option value="{{$porcentajes->idPorcentaje}}">{{$porcentajes->porcentaje}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <!--<div class="form-group col-md-4">
                   <label for="valorTotal">Valor Total</label>
                   <input type="number" id="valorTotal" name="valorTotal"
                   class="form-control" placeholder="Escribe valor total" value="0"/>
-                </div>
+                </div>-->
               </div>
-              <div class="form-row" >
+              <!--<div class="form-row" >
                 <div class="form-group col-md-4">
                   <label for="fechaPrestamo">Fecha prestamo</label>
                   <input type="date" id="fechaPrestamo" name="fechaPrestamo" value="<?php echo date('Y-m-d'); ?>"
                   class="form-control"/>
-                </div>
-                <div class="form-group col-md-4">
+                </div>-->
+                <!--<div class="form-group col-md-4">
                   <label for="numCuotas">Numero de cuotas: </label>
                   <input type="number" id="numCuotas"  name="numCuotas"
                   class="form-control" placeholder="Escribe numero de cuotas" value="0"/>
@@ -42,16 +50,7 @@
                     @endforeach
                   </select>
                 </div>
-                <div class="form-group col-md-4">
-                  <label for="idInteres">Interes</label>
-                  <select  name="idInteres" id="idInteres" class="form-control">
-                    @foreach($porcentaje as $porcentajes)
-                      <option value="{{$porcentajes->idPorcentaje}}">{{$porcentajes->porcentaje}}</option>
-                    @endforeach
-                  </select>
-                </div>
-                
-              </div>
+              </div>-->
               <div class="form-row" >
                 <div class="form-group col-md-4">
                   <label for="valorDefecto">Valor defecto</label>

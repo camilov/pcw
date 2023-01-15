@@ -15,7 +15,7 @@
               @endforeach
               <div class="form-row" >
                 <div class="form-group col-md-2">
-                  <label for="numCuota">N° Cuota</label>
+                  <label for="numCuota">N° Cuotas</label>
                   <input type="number" id="numCuota"  name="numCuota" 
                   class="form-control" value="1" onchange="sumar()"/>
                 </div>
@@ -26,11 +26,11 @@
                   class="form-control" value="{{$valorDefectos->valorDefecto}}"/>
                   @endforeach
                 </div>
-                <div class="form-group col-md-4">
+                <!--<div class="form-group col-md-4">
                   <label for="fechaAbono">Fecha Abono</label>
                   <input type="date" id="fechaAbono" name="fechaAbono" value="<?php echo date('Y-m-d'); ?>" 
                   class="form-control" class="form-control" />
-                </div>
+                </div>-->
               </div>
               <br>
               <button type="submit" class="btn btn-primary">Registrar</button>

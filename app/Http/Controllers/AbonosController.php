@@ -110,7 +110,11 @@ class AbonosController extends Controller
         $movimiento->tipMvto   = 'A';
         $movimiento->idTarjeta = $idTarjeta;
         $movimiento->idCliente = $idCliente;
+        $movimiento->mcaAjuste = 0;
         $movimiento->fecMvto   = now();
+
+        
+        $abono->fechaAbono   = now();
 
         $tarjeta->save();
         $abono->save();
@@ -193,11 +197,12 @@ class AbonosController extends Controller
         }
 
         $movimiento = new Movimiento();
-        $movimiento->entrada   = $abono->valorAbono;  
-        $movimiento->salida    = 0; 
+        $movimiento->entrada   = 0; 
+        $movimiento->salida    = $abono->valorAbono;  
         $movimiento->tipMvto   = 'AA';
         $movimiento->idTarjeta = $idTarjeta;
         $movimiento->idCliente = $idCliente;
+        $movimiento->mcaAjuste = 0;
         $movimiento->fecMvto   = now();
 
         $total=Cuentas::findOrFail(3);

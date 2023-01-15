@@ -81,5 +81,24 @@ Route::get('abono/{ID},{idTarjeta}/destroy',[
 	        'as'  => 'abono.destroy'
 	    ]);
 /*-----------------------------CUENTAS--------------------------*/
-Route::resource('cuentas','App\Http\Controllers\CuentasController');
+Route::resource('cuenta','App\Http\Controllers\CuentasController');
+
+/*Route::get('cuenta/index',[
+	'uses' => 'App\Http\Controllers\CuentasController@index',
+	 'as'  => 'cuenta.index'
+ ]);*/
+
+
+Route::get('cuenta/{idMovimiento}/edit',[
+	'uses' => 'App\Http\Controllers\CuentasController@edit',
+	 'as'  => 'cuenta.edit'
+ ]);
+
+ Route::put('cuenta/{ID}',[
+	'uses' => 'App\Http\Controllers\CuentasController@update',
+	 'as'  => 'cuenta.update'
+ ]);
+
+/*-----------------------------------------------------------------*/
 Route::resource('movimientos','App\Http\Controllers\MovimientosController');
+Route::resource('consultas','App\Http\Controllers\ConsultasController');

@@ -30,6 +30,18 @@ class MovimientosController extends Controller
                    ->where('movimientos.tipMvto','=','PI')
                    ->where('movimientos.fecMvto',$request->fecha)
                    ->sum('movimientos.salida');
+
+        $prestamos = DB::table('movimientos')
+                   ->where('movimientos.tipMvto','=','PR')
+                   ->where('movimientos.fecMvto',$request->fecha)
+                   ->sum('movimientos.salida');
+
+        $renovaciones = DB::table('movimientos')
+                   ->where('movimientos.tipMvto','=','RE')
+                   ->where('movimientos.fecMvto',$request->fecha)
+                   ->sum('movimientos.salida');
+
+        $pr = $prestamos + $renovaciones;
         //dd($interes);
         $entrada = DB::table('movimientos')
                    ->where('movimientos.tipMvto','=','A')
@@ -47,10 +59,13 @@ class MovimientosController extends Controller
                   ->sum('movimientos.salida');
 
         $salida = abs($negativo) + $positivo;
+        $total = $entrada;
 
         $entrada = $entrada - $salida;
 
-        return view('movimiento.index')->with('movimiento',$movimiento)->with('interes',$interes)->with('entrada',$entrada)->with('salida',$salida); 
+
+        return view('movimiento.index')->with('movimiento',$movimiento)->with('interes',$interes)->with('entrada',$entrada)->with('salida',$salida)->with('total',$total)
+              ->with('pr',$pr); 
     }
 
     /**

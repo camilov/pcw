@@ -77,10 +77,15 @@ class TarjetasController extends Controller
         }
 
         $total=Cuentas::findOrFail(3);
-        $total->totalCapital =$capital;
-        $total->totalPrestado =$totalPrestado;
+        $total->totalCapital  = $capital;
+        $total->totalPrestado = $totalPrestado;
         $total->save();
 
+        $tarjeta->fechaPrestamo = now();
+        $tarjeta->fecActu       = now();
+        $tarjeta->idEstado      = 1;
+        $tarjeta->valorTotal    = 0;
+        $tarjeta->numCuotas     = 0;
         $tarjeta->save();
 
         $tarjetas = DB::table('tarjetas')
@@ -93,6 +98,7 @@ class TarjetasController extends Controller
         $movimiento->tipMvto   = 'PR';
         $movimiento->idTarjeta = $tarjetas;
         $movimiento->idCliente = $request->idCliente;
+        $movimiento->mcaAjuste = 0;
         $movimiento->fecMvto   = now();
         $movimiento->save();
 
@@ -139,100 +145,66 @@ class TarjetasController extends Controller
         $tarjeta->valorDefecto =$request->valorDefecto;
 
         $renovar = $request->renovar;
-        $especial = $request->especial;
-        $voltear = $request->voltear;
         $estado = $request->idEstado;
         $nuevoValor = $request->nuevoValor;
-        $nuevoValorDefecto = $request->nuevoValorDefecto;
 
         
         $tarjetas = DB::table('tarjetas')
-                      ->select('valorPrestado','valorTotal')
+                      ->select('valorPrestado','valorTotal','idEstado')
                       ->where('tarjetas.idTarjeta','=',$id)
                       ->get();
-
-
 
         foreach($tarjetas as $tarjeta3)
         {
            $valorPrestado = $tarjeta3->valorPrestado;
            $valorTotal    = $tarjeta3->valorTotal;
+           $idEstado      = $tarjeta3->idEstado;
         }
 
-        
-        
-        if($estado == 2)
+        if($idEstado == 1)
         {
-            if($voltear =="s")
+            if($estado == 2)
             {
-                if($especial =="s"){
-                    $tarjeta2 = new Tarjeta();
-                    $tarjeta2->idCliente     = $request->idCliente;
-                    $tarjeta2->valorPrestado = $nuevoValor;  
-                    $tarjeta2->valorTotal    = 0;
-                    $tarjeta2->fechaPrestamo = now();
-                    $tarjeta2->numCuotas     = 0;
-                    $tarjeta2->idEstado      = 1;
-                    $tarjeta2->interes       = 0;
-                    $tarjeta2->valorDefecto  = $nuevoValorDefecto;
-                    $tarjeta2->save();
-
-                    self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
-                }else
-                {   
-                    $tarjeta1 = new Tarjeta();
-                    $tarjeta1->idCliente     = $request->idCliente;
-                    $tarjeta1->valorPrestado = $valorPrestado;  
-                    $tarjeta1->valorTotal    = 0;
-                    $tarjeta1->fechaPrestamo = now();
-                    $tarjeta1->numCuotas     = 0;
-                    $tarjeta1->idEstado      = 1;
-                    $tarjeta1->interes       = 0;
-                    $tarjeta1->valorDefecto  = $request->valorDefecto;
-                    $tarjeta1->save();
-
-                    self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
-                }
-            }else{
-                if($renovar =="s"){
-                    if($especial =="s"){
-                        $tarjeta4 = new Tarjeta();
-                        $tarjeta4->idCliente     = $request->idCliente;
-                        $tarjeta4->valorPrestado = $nuevoValor;  
-                        $tarjeta4->valorTotal    = 0;
-                        $tarjeta4->fechaPrestamo = now();
-                        $tarjeta4->numCuotas     = 0;
-                        $tarjeta4->idEstado      = 1;
-                        $tarjeta4->interes       = 0;
-                        $tarjeta4->valorDefecto  = $nuevoValorDefecto;
-                        $tarjeta4->save();
-
-                        self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
+                if($renovar =="s")
+                {
+                    $tarjeta3 = new Tarjeta();
+                    $tarjeta3->idCliente     = $request->idCliente;
+                    
+                    if($nuevoValor > 0)
+                    {
+                        $tarjeta3->valorPrestado = $nuevoValor;  
                     }else
                     {
-                        $tarjeta3 = new Tarjeta();
-                        $tarjeta3->idCliente     = $request->idCliente;
-                        $tarjeta3->valorPrestado = $valorPrestado;  
-                        $tarjeta3->valorTotal    = 0;
-                        $tarjeta3->fechaPrestamo = now();
-                        $tarjeta3->numCuotas     = 0;
-                        $tarjeta3->idEstado      = 1;
-                        $tarjeta3->interes       = 0;
-                        $tarjeta3->valorDefecto  = $request->valorDefecto;
-                        $tarjeta3->save();
-
-                        self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
+                        $tarjeta3->valorPrestado = $valorPrestado; 
                     }
+                    
+                    $tarjeta3->valorTotal    = 0;
+                    $tarjeta3->fechaPrestamo = now();
+                    $tarjeta3->numCuotas     = 0;
+                    $tarjeta3->idEstado      = 1;
+                    $tarjeta3->interes       = 0;
+                    $tarjeta3->valorDefecto  = $request->valorDefecto;
+                    $tarjeta3->fecActu       = now();
+                    $tarjeta3->save();
+
+                    self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$renovar,$id,$request->idCliente);   
+                }else
+                {
+                    self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$renovar,$id,$request->idCliente);
                 }
-            }
-            if($renovar =="n" && $voltear == "n")
+                
+                $tarjeta->fecActu   = now();
+                $tarjeta->save();
+
+            }else
             {
-                self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
+                //mensaje que ya esta cerrada la tarjeta
             }
-
+        }else
+        {
+            //mensaje que ya esta cerrada la tarjeta
         }
-
-        $tarjeta->save();
+        
         return redirect()->route('tarjeta.index',$request->idCliente);
     }
 
@@ -289,6 +261,7 @@ class TarjetasController extends Controller
         $movimiento->tipMvto   = 'BT';
         $movimiento->idTarjeta = $id;
         $movimiento->idCliente = $idCliente;
+        $movimiento->mcaAjuste = 0;
         $movimiento->fecMvto   = now();
         $movimiento->save();*/
 
@@ -296,7 +269,7 @@ class TarjetasController extends Controller
         return redirect()->route('tarjeta.index',$idCliente);
     }
 
-    public function calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltea,$renueva,$especial,$idTarjeta,$idCliente)
+    public function calculaValores($nuevoValor,$valorPrestado,$valorTotal,$renueva,$idTarjeta,$idCliente)
     {
         $nuevoTotalPrestado;
         $nuevoTotalPagado;
@@ -305,30 +278,10 @@ class TarjetasController extends Controller
         $operar;
         $valorTotalM;
         $valorTotalFinal;
+        $interes = $valorPrestado*0.3;
+        $valorTotalM = $valorPrestado + $interes;
 
-        $valores2 = DB::table('totales')
-                      ->select('totalCapital','totalPagado','totalPrestado')
-                      ->where('totales.idTotal','=',3)
-                      ->get();
-        
-        foreach($valores2 as $valor2)
-        {
-           $capital       = $valor2->totalCapital ;
-           $totalPagado   = $valor2->totalPagado  ;
-           $totalPrestado = $valor2->totalPrestado;
-
-        }
-
-        if($voltea =="s" || $renueva =="s")
-        {
-            $movimiento = new Movimiento();
-            $movimiento->entrada   = 0;  
-            $movimiento->tipMvto   = 'PR';
-            $movimiento->idTarjeta = $idTarjeta;
-            $movimiento->idCliente = $idCliente;
-            $movimiento->fecMvto   = now();
-        }
-
+        //movimiento2 de pago de interes
         $movimiento2 = new Movimiento();
         $movimiento2->entrada   = 0;  
         $movimiento2->tipMvto   = 'PI';
@@ -336,54 +289,76 @@ class TarjetasController extends Controller
         $movimiento2->idCliente = $idCliente;
         $movimiento2->fecMvto   = now();
 
-        $interes = $valorPrestado*0.3;
-        $valorTotalM = $valorPrestado + $interes;
 
-        if($valorTotalM != $valorTotal){
-            $valorTotalFinal = 0;
-        }else{
-            if ($renueva =="s"){
-                $valorTotalFinal =$valorPrestado;
-            }elseif($voltea =="s")
+        if($renueva =="n")
+        {
+            if($valorTotal =  $valorTotalM)
             {
-                if($especial = "n"){
-                    $valorTotalFinal = $valorPrestado;
+                $movimiento2->salida = $interes/2;
+                $movimiento2->mcaAjuste = 0;
+            }
+            else
+            {
+                $movimiento2->salida = ($valorTotal-$valorPrestado)/2;
+                $movimiento2->mcaAjuste = 1;
+            }
+
+        }else{
+            //Movimiento de prestamo
+            $movimiento = new Movimiento();
+            $movimiento->entrada   = 0;  
+            $movimiento->tipMvto   = 'RE';
+            $movimiento->idTarjeta = $idTarjeta;
+            $movimiento->idCliente = $idCliente;
+            $movimiento->fecMvto   = now();
+
+            //-------------------
+
+            if($valorTotal ==  $valorTotalM)
+            {
+                $movimiento2->salida = $interes/2;
+                $movimiento2->mcaAjuste = 0;
+
+                if($nuevoValor > 0)
+                {
+                    $movimiento->salida = abs($valorTotalM - $valorTotal - $nuevoValor);
+                    $movimiento->mcaAjuste = 1;
                 }else{
-                    $valorTotalFinal = 0; 
+
+                    $movimiento->salida = $valorPrestado;
+                    $movimiento->mcaAjuste = 0;
                 }
             }
-        }
-        
-        if($voltea =="s"){
-            $nuevoTotalPrestado = $totalPrestado + $valorPrestado;
-            $nuevoTotalCapital  = $capital - ($valorPrestado + $interes-$valorTotal-($interes/2));  
-            $movimiento->salida = $valorPrestado + $interes-$valorTotal-$valorPrestado;
-            $movimiento2->salida = $interes/2;
-        }else{
-            if($renueva =="s"){
-                $nuevoTotalPrestado = $totalPrestado + $valorPrestado;
-                $nuevoTotalCapital  = $capital - ($valorPrestado - ($interes/2));
-                $movimiento->salida = $valorPrestado;
-                $movimiento2->salida = $interes/2;
-            }elseif ($voltea =="n" && $renueva =="n") {
-                $nuevoTotalPrestado = $totalPrestado;
-                $nuevoTotalCapital  = $capital - ($interes/2);
-                $movimiento2->salida = $interes/2;
+            else
+            {
+                if($nuevoValor > 0)
+                {
+                    $movimiento->salida = abs($valorTotalM - $valorTotal - $nuevoValor);
+                    $movimiento->mcaAjuste = 1;
+                }else{
+                    
+                    if($valorTotal > $valorTotalM)
+                    {
+                        $movimiento->salida = $valorPrestado;
+                        $movimiento->mcaAjuste = 0;
+                    }else{
+                        $movimiento->salida = abs($valorTotalM - $valorTotal - $valorPrestado);
+                        $movimiento->mcaAjuste = 1;
+                    }
+                    
+                }    
+            
+                if(($valorTotal >=$valorPrestado && $valorTotal <= $valorTotalM) || $valorTotal < $valorPrestado){
+                    $movimiento2->salida = $interes/2;
+                    $movimiento2->mcaAjuste = 1;
+                }else{
+                    $movimiento2->salida = ($valorTotal-$valorPrestado)/2;
+                    $movimiento2->mcaAjuste = 1;
+                }
             }
+            $movimiento->save();
+            $movimiento2->save();
         }
-
-        $total=Cuentas::findOrFail(3);
-        $total->totalCapital   = $nuevoTotalCapital;
-        $total->totalPrestado  = $nuevoTotalPrestado;
-        $total->save();
-
-        if($voltea =="s" || $renueva =="s")
-        {
-          $movimiento->save();
-        }
-        
-        $movimiento2->save();
-
     }
     
 }

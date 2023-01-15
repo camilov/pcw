@@ -241,14 +241,19 @@ return [
             'icon'        => 'far fa-address-book',
         ],
         [
-            'text'  => 'Cuentas',
-            'route' => 'cuentas.index',
+            'text'  => 'Ajustes',
+            'route' => 'cuenta.index',
             'icon'  => 'fas fa-calculator',
         ],
          [
             'text'  => 'Movimientos',
             'route' => 'movimientos.index',
             'icon'  => 'fas fa-calculator',
+        ],
+        [
+            'text'  => 'Consultas',
+            'route' => 'consultas.index',
+            'icon'  => 'fas fa-list',
         ],
         /*[
             'text'        => 'pages',

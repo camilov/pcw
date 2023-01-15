@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Consultas;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Models\Cuentas;
-use App\Models\Movimiento;
 
-class CuentasController extends Controller
+class ConsultasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,21 +14,16 @@ class CuentasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-
-        $movimiento = DB::table('movimientos')
-        
-        ->join('tarjetas','tarjetas.idTarjeta', '=','movimientos.idTarjeta')
-        ->join('clientes','clientes.idCliente', '=','tarjetas.idCliente')
-                      ->select('tipMvto','salida','movimientos.idTarjeta','idMovimiento','tarjetas.valorPrestado as valorPrestado','tarjetas.valorTotal as valorTotal',
-                      'clientes.nombre')
-                      //->where('movimientos.fecMvto','=',now()/*$request->fecha*/)
-                      ->where('movimientos.mcaAjuste','=','1')
-                      ->orderBy('idTarjeta','desc')
+    {   
+        //dd($request->fecha);
+        $deudores     = DB::table('tarjetas')
+                      ->join('clientes','clientes.idCliente', '=','tarjetas.idCliente')
+                      ->select('clientes.nombre as nombre','valorPrestado as prestamo','valorTotal as pagado')
+                      ->where('tarjetas.idEstado','=','1')
+                      ->orderBy('tarjetas.idCliente','desc')
                       ->paginate(100);
 
-         //dd($movimiento);
-        return view('cuenta.index')->with('movimiento',$movimiento); 
+        return view('consultas.index')->with('deudores',$deudores); 
     }
 
     /**
@@ -73,8 +66,7 @@ class CuentasController extends Controller
      */
     public function edit($id)
     {
-        $movimiento = Movimiento::findOrFail($id);
-        return view('cuenta.edit')->with('movimiento',$movimiento);
+        //
     }
 
     /**
@@ -86,12 +78,7 @@ class CuentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $movimiento=Movimiento::findOrFail($id);
-        $movimiento->salida =$request->valor;
-        $movimiento->mcaAjuste =0;
-        $movimiento->save();
-
-        return redirect()->route('cuenta.index');
+        //
     }
 
     /**
@@ -105,3 +92,4 @@ class CuentasController extends Controller
         //
     }
 }
+
