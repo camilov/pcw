@@ -161,8 +161,10 @@ class TarjetasController extends Controller
 
         
         
-        if($estado == 2){
-            if($voltear =="s"){
+        if($estado == 2)
+        {
+            if($voltear =="s")
+            {
                 if($especial =="s"){
                     $tarjeta2 = new Tarjeta();
                     $tarjeta2->idCliente     = $request->idCliente;
@@ -175,7 +177,7 @@ class TarjetasController extends Controller
                     $tarjeta2->valorDefecto  = $nuevoValorDefecto;
                     $tarjeta2->save();
 
-                    self::calculaValores($nuevoValor,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
+                    self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
                 }else
                 {   
                     $tarjeta1 = new Tarjeta();
@@ -189,7 +191,7 @@ class TarjetasController extends Controller
                     $tarjeta1->valorDefecto  = $request->valorDefecto;
                     $tarjeta1->save();
 
-                    self::calculaValores($valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
+                    self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
                 }
             }else{
                 if($renovar =="s"){
@@ -205,7 +207,7 @@ class TarjetasController extends Controller
                         $tarjeta4->valorDefecto  = $nuevoValorDefecto;
                         $tarjeta4->save();
 
-                        self::calculaValores($nuevoValor,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
+                        self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
                     }else
                     {
                         $tarjeta3 = new Tarjeta();
@@ -219,13 +221,13 @@ class TarjetasController extends Controller
                         $tarjeta3->valorDefecto  = $request->valorDefecto;
                         $tarjeta3->save();
 
-                        self::calculaValores($valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
+                        self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
                     }
                 }
             }
             if($renovar =="n" && $voltear == "n")
             {
-                self::calculaValores($valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
+                self::calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltear,$renovar,$especial,$id,$request->idCliente);
             }
 
         }
@@ -294,8 +296,16 @@ class TarjetasController extends Controller
         return redirect()->route('tarjeta.index',$idCliente);
     }
 
-    public function calculaValores($valorPrestado,$valorTotal,$voltea,$renueva,$especial,$idTarjeta,$idCliente)
+    public function calculaValores($nuevoValor,$valorPrestado,$valorTotal,$voltea,$renueva,$especial,$idTarjeta,$idCliente)
     {
+        $nuevoTotalPrestado;
+        $nuevoTotalPagado;
+        $nuevoTotalCapital;
+        $interes;
+        $operar;
+        $valorTotalM;
+        $valorTotalFinal;
+
         $valores2 = DB::table('totales')
                       ->select('totalCapital','totalPagado','totalPrestado')
                       ->where('totales.idTotal','=',3)
@@ -326,35 +336,46 @@ class TarjetasController extends Controller
         $movimiento2->idCliente = $idCliente;
         $movimiento2->fecMvto   = now();
 
-        
-        $nuevoTotalPrestado;
-        $nuevoTotalPagado;
-        $nuevoTotalCapital;
+        $interes = $valorPrestado*0.3;
+        $valorTotalM = $valorPrestado + $interes;
 
+        if($valorTotalM != $valorTotal){
+            $valorTotalFinal = 0;
+        }else{
+            if ($renueva =="s"){
+                $valorTotalFinal =$valorPrestado;
+            }elseif($voltea =="s")
+            {
+                if($especial = "n"){
+                    $valorTotalFinal = $valorPrestado;
+                }else{
+                    $valorTotalFinal = 0; 
+                }
+            }
+        }
+        
         if($voltea =="s"){
             $nuevoTotalPrestado = $totalPrestado + $valorPrestado;
-            $nuevoTotalCapital  = $capital - ($valorPrestado + ($valorPrestado*0.3)-$valorTotal-(($valorPrestado*0.3)/2));  
-            $movimiento->salida = $valorPrestado + ($valorPrestado*0.3)-$valorTotal-$valorPrestado;
-            $movimiento2->salida = ($valorPrestado*0.3)/2;
+            $nuevoTotalCapital  = $capital - ($valorPrestado + $interes-$valorTotal-($interes/2));  
+            $movimiento->salida = $valorPrestado + $interes-$valorTotal-$valorPrestado;
+            $movimiento2->salida = $interes/2;
         }else{
             if($renueva =="s"){
                 $nuevoTotalPrestado = $totalPrestado + $valorPrestado;
-                $nuevoTotalCapital  = $capital - ($valorPrestado - (($valorPrestado*0.3)/2));
+                $nuevoTotalCapital  = $capital - ($valorPrestado - ($interes/2));
                 $movimiento->salida = $valorPrestado;
-                $movimiento2->salida = ($valorPrestado*0.3)/2;
+                $movimiento2->salida = $interes/2;
             }elseif ($voltea =="n" && $renueva =="n") {
                 $nuevoTotalPrestado = $totalPrestado;
-                $nuevoTotalCapital  = $capital - (($valorPrestado*0.3)/2);
-                $movimiento2->salida = ($valorPrestado*0.3)/2;
+                $nuevoTotalCapital  = $capital - ($interes/2);
+                $movimiento2->salida = $interes/2;
             }
         }
-
 
         $total=Cuentas::findOrFail(3);
         $total->totalCapital   = $nuevoTotalCapital;
         $total->totalPrestado  = $nuevoTotalPrestado;
         $total->save();
-
 
         if($voltea =="s" || $renueva =="s")
         {
@@ -362,7 +383,6 @@ class TarjetasController extends Controller
         }
         
         $movimiento2->save();
-
 
     }
     
