@@ -161,6 +161,8 @@ class TarjetasController extends Controller
            $idEstado      = $tarjeta3->idEstado;
         }
 
+        //dd($valorTotal);
+
         if($idEstado == 1)
         {
             if($estado == 2)
@@ -205,7 +207,7 @@ class TarjetasController extends Controller
             //mensaje que ya esta cerrada la tarjeta
         }
         
-        return redirect()->route('tarjeta.index',$request->idCliente);
+        return redirect()->route('tarjeta.index',$request->idCliente); 
     }
 
     /**
@@ -289,19 +291,28 @@ class TarjetasController extends Controller
         $movimiento2->idCliente = $idCliente;
         $movimiento2->fecMvto   = now();
 
-
         if($renueva =="n")
         {
-            if($valorTotal =  $valorTotalM)
+            if($valorTotal ==  $valorTotalM)
             {
                 $movimiento2->salida = $interes/2;
                 $movimiento2->mcaAjuste = 0;
             }
             else
             {
-                $movimiento2->salida = ($valorTotal-$valorPrestado)/2;
-                $movimiento2->mcaAjuste = 1;
+                if(($valorTotal >=$valorPrestado && $valorTotal <= $valorTotalM) || $valorTotal < $valorPrestado){
+                    $movimiento2->salida = $interes/2;
+                    $movimiento2->mcaAjuste = 1;
+
+                    
+                }else{
+                    $movimiento2->salida = ($valorTotal-$valorPrestado)/2;
+                    $movimiento2->mcaAjuste = 1;
+                }
             }
+
+            //dd($valorTotal);
+            $movimiento2->save();
 
         }else{
             //Movimiento de prestamo
