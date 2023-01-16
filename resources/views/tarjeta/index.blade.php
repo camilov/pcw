@@ -38,7 +38,7 @@
                     <td>{{$tarjetas->valorTotal}}</td>
                     <td>{{$tarjetas->fechaPrestamo}}</td>
                     <td>{{$tarjetas->numCuotas}}</td>
-                    <td id ="estado" onchange="cambiarColor()">{{$tarjetas->descripcion}}</td>
+                    <td id ="estado" onMouseOver ="cambiar_color_out(this)">{{$tarjetas->descripcion}}</td>
                     <td>{{$tarjetas->interes}}</td>
                     <td>
                     <a href="{{route('tarjeta.edit',[$tarjetas->idTarjeta,$id])}}" class="fa fa-wrench"></a>
@@ -73,9 +73,18 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
     <script type="text/javascript">
         
-        $(document).ready(function(){
-             
-      });
+        function cambiar_color_out(celda){
+        
+            //console.log(celda.innerText);
+            
+            if(celda.innerText == "Pendiente")
+            {  
+                celda.style.backgroundColor = "#66ff33";
+            }else{
+                celda.style.backgroundColor = "#ff0000";
+            }
+        } 
+        
     </script>
 
 @endsection
