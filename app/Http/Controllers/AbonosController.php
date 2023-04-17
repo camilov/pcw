@@ -58,11 +58,11 @@ class AbonosController extends Controller
                             ->select('valorAbono')
                             ->where('abonos.idTarjeta','=',$id)
                             ->orderByDesc('idAbono')
-                            ->get()
-                            ->last();
+                            ->get();
+                            //->last();
                                                                 
         $valorFinal = 0;
-       // dd($valorFinal);
+        //dd($valorAbono);
         
         if(empty($valorAbono)){
             if($valorDefecto != '0'){

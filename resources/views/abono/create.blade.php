@@ -11,7 +11,7 @@
               <input type="text" id="idTarjeta"  name="idTarjeta" value={{$id}} hidden="true" />
               
               <input type="number" id="valorFinal" name="valorFinal" 
-                  class="form-control" placeholder="Escribe valor por defecto" value="{{ old('valorFinal', json_decode($valorFinal)->valorAbono) }}" />
+                  class="form-control" placeholder="Escribe valor por defecto" value="{{$valorFinal}}" />
               
               <div class="form-row" >
                 <div class="form-group col-md-2">
@@ -22,7 +22,7 @@
                 <div class="form-group col-md-2">
                   <label for="valorAbono">Valor Abono</label>
                   <input type="number" id="valorAbono"  name="valorAbono"
-                  class="form-control" value="{{ old('valorFinal', json_decode($valorFinal)->valorAbono) }}"/>  
+                  class="form-control" value="{{$valorFinal}}"/>  
                 
                 </div>
                 <!--<div class="form-group col-md-4">
