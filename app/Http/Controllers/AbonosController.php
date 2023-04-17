@@ -57,16 +57,15 @@ class AbonosController extends Controller
         $valorAbono = DB::table('abonos')
                             ->select('valorAbono')
                             ->where('abonos.idTarjeta','=',$id)
-                            ->orderByDesc('idAbono')
-                            ->get();
-                            //->last();
+                            ->latest('idAbono')
+                            ->first();
                                                                 
         $valorFinal = 0;
-        //dd($valorAbono);
+       // dd($valorDefecto);
         
         if(empty($valorAbono)){
             if($valorDefecto != '0'){
-                $valorFinal = $valorDefecto;
+                $valorFinal = $valorDefecto->valorDefecto;
             }else{
                 $valorFinal = 0;
                 //dd($valorFinal);
@@ -82,13 +81,20 @@ class AbonosController extends Controller
                     $valorFinal = $valorDefecto;
                 }
             }*/
-            $valorFinal = $valorAbono;
+            $valorFinal = $valorAbono->valorAbono;
             
         }
+
+
+        /*if(is_object($valorAbono)){
+            $valorFinal = $valorAbono->valorAbono;
+        } else {
+            $valorFinal = 0;
+        }*/
         //$valorFinal = json_encode($valorFinal);
-        //dd($valorFinal); 
+       // dd($valorFinal); 
         //return view('abono.create')->with('id',$id)->with('valorFinal',$valorFinal);
-        return view('abono.create', compact('id', 'valorFinal'));
+        return view('abono.create', compact('id', 'valorFinal'))/*->with('valorFinal', strval($valorFinal))*/;
     }
 
     /**

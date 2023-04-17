@@ -11,7 +11,7 @@
               <input type="text" id="idTarjeta"  name="idTarjeta" value={{$id}} hidden="true" />
               
               <input type="number" id="valorFinal" name="valorFinal" 
-                  class="form-control" placeholder="Escribe valor por defecto" value="{{$valorFinal}}" />
+                  class="form-control" placeholder="Escribe valor por defecto" value="{{$valorFinal}}" hidden="true"/>
               
               <div class="form-row" >
                 <div class="form-group col-md-2">
