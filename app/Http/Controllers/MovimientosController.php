@@ -58,8 +58,13 @@ class MovimientosController extends Controller
                   ->where('movimientos.salida','<','0')
                   ->sum('movimientos.salida');
 
+        $anulacionAbono  = DB::table('movimientos')
+                        ->where('movimientos.tipMvto','=','AA')
+                        ->where('movimientos.fecMvto',$request->fecha)
+                        ->sum('movimientos.salida');        
+
         $salida = abs($negativo) + $positivo;
-        $total = $entrada;
+        $total = $entrada - $anulacionAbono;
 
         $entrada = $entrada - $salida;
 
