@@ -30,9 +30,9 @@ Route::resource('cliente','App\Http\Controllers\ClientesController');
 Route::get('cliente/{ID}/destroy',[
 	       'uses' => 'App\Http\Controllers\ClientesController@destroy',
 	        'as'  => 'cliente.destroy'
-	    ]);
+	    ]); 
 
-/*-----------------------------TARJETAS--------------------------*/
+/*-------------------------------TARJETAS--------------------------*/
 //Route::resource('tarjeta','App\Http\Controllers\TarjetasController');
 
 Route::get('tarjeta/{ID}/index',[
