@@ -106,6 +106,16 @@ Route::get('abono/{ID},{idTarjeta}/destroy',[
 	       'uses' => 'App\Http\Controllers\AbonosController@destroy',
 	        'as'  => 'abono.destroy'
 	    ]);
+
+Route::post('abono/store',[
+			'uses' => 'App\Http\Controllers\AbonosController@store',
+			 'as'  => 'abono.store'
+		 ]);
+
+Route::get('abono/{ID}/edit',[
+			'uses' => 'App\Http\Controllers\AbonosController@edit',
+			 'as'  => 'abono.edit'
+		 ]);
 /*-----------------------------CUENTAS--------------------------*/
 //Route::resource('cuenta','App\Http\Controllers\CuentasController');
 
