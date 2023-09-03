@@ -37,7 +37,7 @@ Route::get('cliente/index',[
 	 'as'  => 'cliente.create'
  ]);
 
-Route::get('cliente/edit',[
+Route::get('cliente/{ID}/edit',[
 	'uses' => 'App\Http\Controllers\ClientesController@edit',
 	 'as'  => 'cliente.edit'
  ]);
@@ -52,8 +52,11 @@ Route::put('cliente/{ID}',[
 			'uses' => 'App\Http\Controllers\ClientesController@update',
 			 'as'  => 'cliente.update'
 		 ]);
- 
- Route::post('store', 'App\Http\Controllers\ClientesController@store')->name("cliente.store");
+ Route::post('cliente/store',[
+			'uses' => 'App\Http\Controllers\ClientesController@store',
+			 'as'  => 'cliente.store'
+		 ]);
+ //Route::post('store', 'App\Http\Controllers\ClientesController@store')->name("cliente.store");
 
 /*-------------------------------TARJETAS--------------------------*/
 //Route::resource('tarjeta','App\Http\Controllers\TarjetasController');
