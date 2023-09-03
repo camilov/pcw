@@ -27,10 +27,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 /*-----------------------------CLIENTES--------------------------*/
 Route::resource('cliente','App\Http\Controllers\ClientesController');
-Route::get('cliente/{ID}/destroy',[
+/*Route::get('cliente/{ID}/destroy',[
 	       'uses' => 'App\Http\Controllers\ClientesController@destroy',
 	        'as'  => 'cliente.destroy'
-	    ]); 
+	    ]);*/ 
 
 /*-------------------------------TARJETAS--------------------------*/
 //Route::resource('tarjeta','App\Http\Controllers\TarjetasController');
