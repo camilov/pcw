@@ -26,11 +26,34 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /*-----------------------------CLIENTES--------------------------*/
-Route::resource('cliente','App\Http\Controllers\ClientesController');
-/*Route::get('cliente/{ID}/destroy',[
+//Route::resource('cliente','App\Http\Controllers\ClientesController');
+Route::get('cliente/index',[
+	'uses' => 'App\Http\Controllers\ClientesController@index',
+	 'as'  => 'cliente.index'
+ ]);
+
+ Route::get('cliente/create',[
+	'uses' => 'App\Http\Controllers\ClientesController@create',
+	 'as'  => 'cliente.create'
+ ]);
+
+Route::get('cliente/edit',[
+	'uses' => 'App\Http\Controllers\ClientesController@edit',
+	 'as'  => 'cliente.edit'
+ ]);
+
+
+Route::get('cliente/{ID}/destroy',[
 	       'uses' => 'App\Http\Controllers\ClientesController@destroy',
 	        'as'  => 'cliente.destroy'
-	    ]);*/ 
+	    ]);
+
+Route::put('cliente/{ID}',[
+			'uses' => 'App\Http\Controllers\ClientesController@update',
+			 'as'  => 'cliente.update'
+		 ]);
+ 
+ Route::post('store', 'App\Http\Controllers\ClientesController@store')->name("cliente.store");
 
 /*-------------------------------TARJETAS--------------------------*/
 //Route::resource('tarjeta','App\Http\Controllers\TarjetasController');
@@ -83,10 +106,10 @@ Route::get('abono/{ID},{idTarjeta}/destroy',[
 /*-----------------------------CUENTAS--------------------------*/
 //Route::resource('cuenta','App\Http\Controllers\CuentasController');
 
-/*Route::get('cuenta/index',[
+Route::get('cuenta/index',[
 	'uses' => 'App\Http\Controllers\CuentasController@index',
 	 'as'  => 'cuenta.index'
- ]);*/
+ ]);
 
 
 Route::get('cuenta/{idMovimiento}/edit',[
