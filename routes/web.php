@@ -136,5 +136,24 @@ Route::get('cuenta/{idMovimiento}/edit',[
  ]);
 
 /*-----------------------------------------------------------------*/
-Route::resource('movimientos','App\Http\Controllers\MovimientosController');
+/*---------------------------Movimientos----------------------------*/
+//Route::resource('movimientos','App\Http\Controllers\MovimientosController');
+
+Route::get('movimientos/index',[
+	'uses' => 'App\Http\Controllers\MovimientosController@index',
+	 'as'  => 'movimientos.index'
+ ]);
+
+ Route::get('movimientos/generatePDF',[
+	'uses' => 'App\Http\Controllers\MovimientosController@generatePDF',
+	 'as'  => 'movimientos.generatePDF'
+ ]);
+
+ Route::get('movimientos/generatePdfMorosidad',[
+	'uses' => 'App\Http\Controllers\MovimientosController@generatePdfMorosidad',
+	 'as'  => 'movimientos.generatePdfMorosidad'
+ ]);
+
+ /*---------------------------Consultas----------------------------*/
 Route::resource('consultas','App\Http\Controllers\ConsultasController');
+//Route::get('/generate-pdf', 'PDFController@generatePDF');

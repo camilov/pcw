@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Movimiento;
+use App\Models\Tarjeta;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class MovimientosController extends Controller
@@ -67,6 +69,15 @@ class MovimientosController extends Controller
         $total = $entrada - $anulacionAbono;
 
         $entrada = $entrada - $salida;
+        session(['movimiento_data' => [
+            'movimiento' => $movimiento,
+            'interes' => $interes,
+            'entrada' => $entrada,
+            'salida' => $salida,
+            'total' => $total,
+            'pr' => $pr,
+            'fecha' => $request->fecha,
+        ]]);
 
 
         return view('movimiento.index')->with('movimiento',$movimiento)->with('interes',$interes)->with('entrada',$entrada)->with('salida',$salida)->with('total',$total)
@@ -137,5 +148,44 @@ class MovimientosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function generatePDF()
+    {
+        // Retrieve the data from the session
+        $sessionData = session('movimiento_data');
+       // dd($sessionData);
+
+        $data = [
+            'title'      => 'Cuadre',
+            'movimiento' => $sessionData['movimiento'],
+            'interes' => $sessionData['interes'],
+            'entrada' => $sessionData['entrada'],
+            'salida' => $sessionData['salida'],
+            'total' => $sessionData['total'],
+            'pr' => $sessionData['pr'],
+        ];
+        //dd($data);
+    
+        $pdf = PDF::loadView('movimiento.sample', $data);
+    
+        return $pdf->download('cuadre-'.$sessionData['fecha'].'.pdf');
+    }
+
+    public function generatePdfMorosidad()
+    {
+        $result = Tarjeta::join('clientes as b', 'tarjetas.idCliente', '=', 'b.idCliente')
+                            ->select('tarjetas.idCliente', 'b.nombre', 'tarjetas.valorPrestado', 'tarjetas.valorTotal', 'tarjetas.numCuotas')
+                            ->where('tarjetas.idEstado', 1)
+                            ->whereNotIn('tarjetas.idCliente', [22])
+                            ->get();
+        $data = [
+            'title'      => 'Morosidad',
+            'result'      =>  $result,
+        ];
+        
+        $pdf = PDF::loadView('movimiento.morosidad',$data);
+    
+        return $pdf->download('Morosidad.pdf');
     }
 }

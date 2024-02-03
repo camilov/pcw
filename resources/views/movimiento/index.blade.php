@@ -6,7 +6,6 @@
 
 @section('content')
 
-     
     <form action="{{route('movimientos.index')}}" method="GET" class="form-group form-center">
         @csrf
         <div class="form-row" >  
@@ -20,6 +19,14 @@
             <div class="form-group col-md-4">
               <span class="input-group-btn"><button type="submit" class="btn btn-primary">Buscar</button></span>
             </div>
+        </div>
+        <div class="form-row" >  
+        <div class="form-group col-md-0"> 
+            <a href="{{ route('movimientos.generatePDF')}}" class="btn btn-primary">PDF Cuadre</a>
+        </div>
+        <div class="form-group col-md-2"> 
+            <a href="{{ route('movimientos.generatePdfMorosidad')}}" class="btn btn-primary">PDF Morosidad</a>
+        </div>
         </div>
     </form>
     <div class="form-row" >  
